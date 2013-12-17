@@ -125,7 +125,7 @@ if (isset($_REQUEST['ajax']) ){
                          
     <p>jQuery editTable is a very small jQuery Plugin (~1Kb gzipped) that fill the gap left by the missing of a default <strong>input field for data tables</strong>. jQuery editTable can be used both in ajax and/or HTTP POST contest and let you preset the title and number of columns or just let complete freedom to the user. You can even append custom behaviors to single column cells (ex. <strong>jQuery UI Datepicker</strong>). The only limit is your imagination! :)</p>
                          
-    <a href="" class="download_button">Download it on GitHub</a>
+    <a href="https://github.com/micc83/editTable" class="download_button">Download it on GitHub</a>
 	
 	<p>To use it you just have to include jQuery and a copy of the plugin in your head or footer:</p>
 <pre>

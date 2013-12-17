@@ -1,0 +1,73 @@
+/* Table */
+table.inputtable {
+	width: 100%;margin: 15px 0;border: 1px solid #eee;border-collapse: collapse;border-spacing: 0;
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+	box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+/* Buttons */
+table.inputtable a.icon-button {
+	background-color: #ccc;display: inline-block;width: 16px;height: 16px;text-decoration: none;color: #fff;font-weight: 800;line-height: 16px;text-align: center;font-size: 12px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+}
+/* Add Buttons */
+table.inputtable a.icon-button.addcol, table.inputtable a.icon-button.addrow {
+	background-color: #81b71a;
+}
+/* Remove Buttons */
+table.inputtable a.icon-button.delcol, table.inputtable a.icon-button.delrow {
+	background-color: #db4a39;
+}
+/* Disabled Buttons */
+table.inputtable a.icon-button.disabled {
+	background-color: #eee;
+}
+/* Table single cells */
+table.inputtable td, table.inputtable th {
+	border: 1px solid #eee;text-align: center;height: 40px;vertical-align: middle;font-size: 14px;
+}
+/* Table headers single cells */
+table.inputtable th {
+	border-bottom: 2px solid #eee;
+}
+/* Table body inputs */
+table.inputtable td input {
+	border: 0;width: 90%;height: 100%;padding: 0 5%;text-align: center;
+}
+/* Table body inputs on focus */
+table.inputtable tr td input:focus {
+	background-color: #fafafa;
+}
+/* First body row cells & input on table without columns header */
+table.inputtable.wh tbody tr:nth-child(1), table.inputtable.wh tbody tr:nth-child(1) input {
+	background-color: #fdfdfd;font-weight: 800;
+}
+/* Mobile Landscape */
+@media only screen and (max-width : 480px) { 
+	/* Table single cells */
+	table.inputtable td, table.inputtable th {
+		min-width: 40px;height: 80px;
+	}
+	/* Buttons */
+	table.inputtable a.icon-button {
+		width: 100%;height: 40px;font-size: 18px;min-width: 40px;line-height: 40px;
+	}
+	/* Table body inputs */
+	table.inputtable td input {
+		height: 80px;
+	}
+	/* Add Buttons */
+	table.inputtable a.icon-button.addcol, table.inputtable a.icon-button.addrow {
+		color: #81b71a;background-color: #fff;
+	}
+	/* Remove Buttons */
+	table.inputtable a.icon-button.delcol, table.inputtable a.icon-button.delrow {
+		color: #db4a39;background-color: #fff;
+	}
+	/* Disabled Buttons */
+	table.inputtable a.icon-button.disabled {
+		color: #eee;background-color: #fff;
+	}
+}

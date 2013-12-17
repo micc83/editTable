@@ -26,7 +26,7 @@ There are of course many methods which can be used on the created table. Let's s
     mytable.getJsonData();          // Get JSON from the table data
     mytable.reset();                // Reset the table to the initial set of data
 
-That's it, now give a look to [some examples](http://codeb.it/edittable/) to understand how it works.
+That's it, now give a look to [the examples](http://codeb.it/edittable/) to understand how it works.
 
 ## Credits and contacts
 

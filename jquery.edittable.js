@@ -80,8 +80,8 @@
                 for (a = 0; a < crow; a += 1) {
                     buildRow(data[a], s.headerCols.length).appendTo($table.find('tbody'));
                 }
-            } else {
-                // Variable columns 
+            } else if ( data[0] ) {
+                // Variable columns
                 for (a = 0; a < data[0].length; a += 1) {
                     $table.find('thead tr').append(defaultth);
                 }
@@ -124,7 +124,12 @@
         // Fill the table with data from textarea or given properties
         if ($el.is('textarea')) {
 
-            reset = JSON.parse($el.val());
+            try {
+                reset = JSON.parse($el.val());
+            } catch (e) {
+                reset = {};
+            }
+
             $el.after($table);
 
             // If inside a form set the textarea content on submit

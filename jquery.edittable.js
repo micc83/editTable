@@ -1,4 +1,4 @@
-/*! editTable v0.1.0 by Alessandro Benoit */
+/*! editTable v0.1.1 by Alessandro Benoit */
 (function ($, window, i) {
 
     'use strict';

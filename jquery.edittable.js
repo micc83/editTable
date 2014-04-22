@@ -144,7 +144,7 @@
         // Add column
         $table.on('click', '.addcol', function () {
 
-            var colid = parseInt($(this).parents('tr').children().index($(this).parent('th')), 10);
+            var colid = parseInt($(this).closest('tr').children().index($(this).parent('th')), 10);
 
             colnumber += 1;
 
@@ -166,7 +166,7 @@
                 return false;
             }
 
-            var colid = parseInt($(this).parents('tr').children().index($(this).parent('th')), 10);
+            var colid = parseInt($(this).closest('tr').children().index($(this).parent('th')), 10);
 
             colnumber -= 1;
 
@@ -190,7 +190,7 @@
 
             rownumber += 1;
 
-            $(this).parents('tr').after(buildRow(0, colnumber));
+            $(this).closest('tr').after(buildRow(0, colnumber));
 
             $table.find('.delrow').removeClass('disabled');
 
@@ -210,7 +210,7 @@
 
             checkButtons();
 
-            $(this).parents('tr').remove();
+            $(this).closest('tr').remove();
 
             $table.find('.addrow').removeClass('disabled');
 

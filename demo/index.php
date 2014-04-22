@@ -27,9 +27,9 @@ if (isset($_REQUEST['ajax']) ){
         <meta name="description" content="jQuery editTable is a very small jQuery Plugin (~1Kb gzipped) that fill the gap left by the missing of a default input field for data tables.">
         <link rel="stylesheet" href="main.css">
         <script src="//code.jquery.com/jquery-latest.js"></script>
-        <script type="text/javascript" src="../jquery.edittable.js?v=0.1.0"></script>
+        <script type="text/javascript" src="../jquery.edittable.js?v=0.1.1"></script>
         <script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-        <link rel="stylesheet" href="../jquery.edittable.css?v=0.1.0">
+        <link rel="stylesheet" href="../jquery.edittable.css?v=0.1.1">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
         <script>
         $(window).ready(function () {
@@ -116,7 +116,7 @@ if (isset($_REQUEST['ajax']) ){
 
   <div class="container">
                  
-    <h1>jQuery editTable <span>v0.1.0</span></h1>
+    <h1>jQuery editTable <span>v0.1.1</span></h1>
     
     <a href="https://twitter.com/micc1983" class="twitter-follow-button" data-show-count="true" data-lang="en">Follow @micc1983</a>
     <a href="https://twitter.com/share" class="twitter-share-button" data-via="Micc1983">Tweet</a>

@@ -1,4 +1,4 @@
-/*! editTable v0.1.0 by Alessandro Benoit */
+/*! editTable v0.1.1 by Alessandro Benoit */
 (function ($, window, i) {
 
     'use strict';
@@ -80,8 +80,8 @@
                 for (a = 0; a < crow; a += 1) {
                     buildRow(data[a], s.headerCols.length).appendTo($table.find('tbody'));
                 }
-            } else {
-                // Variable columns 
+            } else if ( data[0] ) {
+                // Variable columns
                 for (a = 0; a < data[0].length; a += 1) {
                     $table.find('thead tr').append(defaultth);
                 }
@@ -124,7 +124,12 @@
         // Fill the table with data from textarea or given properties
         if ($el.is('textarea')) {
 
-            reset = JSON.parse($el.val());
+            try {
+                reset = JSON.parse($el.val());
+            } catch (e) {
+                reset = s.data;
+            }
+
             $el.after($table);
 
             // If inside a form set the textarea content on submit
@@ -144,7 +149,7 @@
         // Add column
         $table.on('click', '.addcol', function () {
 
-            var colid = parseInt($(this).parents('tr').children().index($(this).parent('th')), 10);
+            var colid = parseInt($(this).closest('tr').children().index($(this).parent('th')), 10);
 
             colnumber += 1;
 
@@ -166,7 +171,7 @@
                 return false;
             }
 
-            var colid = parseInt($(this).parents('tr').children().index($(this).parent('th')), 10);
+            var colid = parseInt($(this).closest('tr').children().index($(this).parent('th')), 10);
 
             colnumber -= 1;
 
@@ -190,7 +195,7 @@
 
             rownumber += 1;
 
-            $(this).parents('tr').after(buildRow(0, colnumber));
+            $(this).closest('tr').after(buildRow(0, colnumber));
 
             $table.find('.delrow').removeClass('disabled');
 
@@ -210,7 +215,7 @@
 
             checkButtons();
 
-            $(this).parents('tr').remove();
+            $(this).closest('tr').remove();
 
             $table.find('.addrow').removeClass('disabled');
 

@@ -127,7 +127,7 @@
             try {
                 reset = JSON.parse($el.val());
             } catch (e) {
-                reset = {};
+                reset = s.data;
             }
 
             $el.after($table);

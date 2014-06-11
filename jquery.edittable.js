@@ -15,6 +15,9 @@
                 first_row: true,
                 row_template: false,
                 field_templates: false,
+                validate_field: function (col_id, value, col_type, $element) {
+                    return true;
+                }
             }, options),
             $el = $(this),
             defaultTableContent = '<thead><tr></tr></thead><tbody></tbody>',
@@ -26,6 +29,7 @@
             colnumber,
             rownumber,
             reset,
+            is_validated = true;
 
         // Increment for IDs
         i = i + 1;
@@ -147,9 +151,15 @@
                             el = $(this).find($(field.html).prop('tagName'));
                         
                         value = field.getValue(el);
+                        if ( !s.validate_field(i, value, s.row_template[i], el) ){
+                            is_validated = false;
+                        }
                         data[row].push(value);
                     } else {
                         value = $(this).find('input[type="text"]').val();
+                        if ( !s.validate_field(i, value, 'text', v) ){
+                            is_validated = false;
+                        }
                         data[row].push(value);
                     }
                 });
@@ -290,6 +300,9 @@
             // Reset data to the first instance
             reset: function () {
                 fillTableData(reset);
+            },
+            isValidated: function () {
+                return is_validated;
             }
         };
     };

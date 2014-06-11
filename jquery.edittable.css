@@ -1,16 +1,19 @@
 /* Table */
 table.inputtable {
 	width: 100%;margin: 15px 0;border: 1px solid #eee;border-collapse: collapse;border-spacing: 0;
-	-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-	box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+	box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 /* Buttons */
 table.inputtable a.icon-button {
-	background-color: #ccc;display: inline-block;width: 16px;height: 16px;text-decoration: none;color: #fff;font-weight: 800;line-height: 16px;text-align: center;font-size: 12px;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
-	border-radius: 8px;
+	background-color: #ccc;display: inline-block;width: 18px;height: 18px;text-decoration: none;color: #fff;font-weight: 800;line-height: 16px;text-align: center;font-size: 14px;
+	-moz-border-radius: 1px;
+	-webkit-border-radius: 1px;
+	border-radius: 1px;
+	-moz-box-shadow: 0 0 1px rgba(0,0,0,0.2);
+	-webkit-box-shadow: 0 0 1px rgba(0,0,0,0.2);
+	box-shadow: 0 0 1px rgba(0,0,0,0.2);
 }
 /* Add Buttons */
 table.inputtable a.icon-button.addcol, table.inputtable a.icon-button.addrow {
@@ -24,16 +27,21 @@ table.inputtable a.icon-button.delcol, table.inputtable a.icon-button.delrow {
 table.inputtable a.icon-button.disabled {
 	background-color: #eee;
 }
+/* Row last cel */
+table.inputtable td:last-child, table.inputtable th:last-child{
+	background-color: #f8f8f8;width: 54px;border: none;
+}
 /* Table single cells */
 table.inputtable td, table.inputtable th {
 	border: 1px solid #eee;text-align: center;height: 40px;vertical-align: middle;font-size: 14px;
 }
 /* Table headers single cells */
 table.inputtable th {
-	border-bottom: 2px solid #eee;
+	border-bottom: 2px solid #e8e8e8;
+	background-color: #f1f1f1;
 }
 /* Table body inputs */
-table.inputtable td input {
+table.inputtable td input[type=text] {
 	border: 0;width: 90%;height: 100%;padding: 0 5%;text-align: center;
 }
 /* Table body inputs on focus */
@@ -52,22 +60,11 @@ table.inputtable.wh tbody tr:nth-child(1), table.inputtable.wh tbody tr:nth-chil
 	}
 	/* Buttons */
 	table.inputtable a.icon-button {
-		width: 100%;height: 40px;font-size: 18px;min-width: 40px;line-height: 40px;
+		width: 40px;height: 40px;font-size: 18px;min-width: 40px;line-height: 40px;
+		margin: 3px 0;
 	}
 	/* Table body inputs */
 	table.inputtable td input {
 		height: 80px;
-	}
-	/* Add Buttons */
-	table.inputtable a.icon-button.addcol, table.inputtable a.icon-button.addrow {
-		color: #81b71a;background-color: #fff;
-	}
-	/* Remove Buttons */
-	table.inputtable a.icon-button.delcol, table.inputtable a.icon-button.delrow {
-		color: #db4a39;background-color: #fff;
-	}
-	/* Disabled Buttons */
-	table.inputtable a.icon-button.disabled {
-		color: #eee;background-color: #fff;
 	}
 }

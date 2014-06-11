@@ -11,11 +11,12 @@
                 jsonData: false,
                 headerCols: false,
                 maxRows: 999,
+                first_row: true,
             }, options),
             $el = $(this),
             defaultTableContent = '<thead><tr></tr></thead><tbody></tbody>',
             $table = $('<table/>', {
-                class: 'inputtable' + ((!s.headerCols) ? ' wh' : ''),
+                class: s.tableClass + ((s.first_row) ? ' wh' : ''),
                 html: defaultTableContent
             }),
             defaultth = '<th><a class="addcol icon-button" href="#">+</a> <a class="delcol icon-button" href="#">-</a></th>',

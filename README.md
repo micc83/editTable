@@ -41,7 +41,7 @@ To define a <strong>custom field type</strong> object:
     [
         'checkbox' : {
             
-            html: '&lt;input type="checkbox"/&gt;',     // Input type html
+            html: '<input type="checkbox">',     // Input type html
 
             // How to get the value from the custom input
             getValue: function (input) {

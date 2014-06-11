@@ -25,11 +25,11 @@ if (isset($_REQUEST['ajax']) ){
         
         <title>jQuery editTable</title>
         <meta name="description" content="jQuery editTable is a very small jQuery Plugin (~1Kb gzipped) that fill the gap left by the missing of a default input field for data tables.">
-        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="main.css?v=0.2.0">
         <script src="//code.jquery.com/jquery-latest.js"></script>
-        <script type="text/javascript" src="../jquery.edittable.js?v=0.1.1"></script>
+        <script type="text/javascript" src="../jquery.edittable.js?v=0.2.0"></script>
         <script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-        <link rel="stylesheet" href="../jquery.edittable.css?v=0.1.1">
+        <link rel="stylesheet" href="../jquery.edittable.css?v=0.2.0">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
         <script>
         $(window).ready(function () {
@@ -95,6 +95,7 @@ if (isset($_REQUEST['ajax']) ){
 	        		'To',
 	        		'Price'
 	        	],
+	        	first_row: false,
 	        	maxRows: 3
 	        });
 	        
@@ -102,6 +103,73 @@ if (isset($_REQUEST['ajax']) ){
         	$("#edittable2").on("focusin", "td:nth-child(1) input, td:nth-child(2) input", function(){
         	    $(this).datepicker();
         	});
+
+        	// Example 4
+        	// Custom fields & validation
+            var mynewtable = $('#examplex').editTable({
+                field_templates: {
+                    'checkbox' : {
+                        html: '<input type="checkbox"/>',
+                        getValue: function (input) {
+                            return $(input).is(':checked');
+                        },
+                        setValue: function (input, value) {
+                            if ( value ){
+                                return $(input).attr('checked', true);
+                            }
+                            return $(input).removeAttr('checked');
+                        }
+                    },
+                    'textarea' : {
+                        html: '<textarea/>',
+                        getValue: function (input) {
+                            return $(input).val();
+                        },
+                        setValue: function (input, value) {
+                            return $(input).text(value);
+                        }
+                    },
+                    'select' : {
+                        html: '<select><option value="">None</option><option>All</option></select>',
+                        getValue: function (input) {
+                            return $(input).val();
+                        },
+                        setValue: function (input, value) {
+                            var select = $(input);
+                            select.find('option').filter(function() {
+                                return $(this).val() == value; 
+                            }).attr('selected', true);
+                            return select;
+                        }
+                    }
+                },
+                row_template: ['checkbox', 'text', 'text', 'textarea', 'select'],
+                headerCols: ['Yes/No','Date','Value','Description', 'Which?'],
+                first_row: false,
+                data: [
+                    [false,"01/30/2013","50,00 €","Lorem ipsum...\n\nDonec in dui nisl. Nam ac libero eget magna iaculis faucibus eu non arcu. Proin sed diam ut nisl scelerisque fermentum."],
+                    [true,"02/28/2013","50,00 €",'This is a <textarea>','All']
+                ],
+                validate_field: function (col_id, value, col_type, $element) {
+                    if ( col_type === 'checkbox' ) {
+                        $element.parent('td').animate({'background-color':'#fff'});
+                        if ( value === false ){
+                            $element.parent('td').animate({'background-color':'#DB4A39'});
+                            return false;
+                        }
+                    }
+                    return true;
+                },
+                tableClass: 'inputtable custom'
+            });
+
+            $('#examplexconsole').click(function(e) {
+                console.log(mynewtable.getData());
+                if ( !mynewtable.isValidated() ){
+                    alert('Not validated');
+                }
+                e.preventDefault();
+            });
         	
         	$('.showcode').click(function () {
         		$($(this).attr('href')).slideToggle(300);
@@ -116,7 +184,7 @@ if (isset($_REQUEST['ajax']) ){
 
   <div class="container">
                  
-    <h1>jQuery editTable <span>v0.1.1</span></h1>
+    <h1>jQuery editTable <span>v0.2.0</span></h1>
     
     <a href="https://twitter.com/micc1983" class="twitter-follow-button" data-show-count="true" data-lang="en">Follow @micc1983</a>
     <a href="https://twitter.com/share" class="twitter-share-button" data-via="Micc1983">Tweet</a>
@@ -138,10 +206,19 @@ if (isset($_REQUEST['ajax']) ){
 	
 	<pre>
 var mytable = $('#edittable').editTable({
-	data: [['']],       // Fill the table with a js array (this is overridden by the textarea content if not empty)
-	jsonData: false,    // Fill the table with json data (this will override data property)
-	headerCols: false,  // Fix columns number and names (array of column names)
-	maxRows: 999        // Max number of rows which can be added
+    data: [['']],           // Fill the table with a js array (this is overridden by the textarea content if not empty)
+    tableClass: 'inputtable',   // Table class, for styling
+    jsonData: false,        // Fill the table with json data (this will override data property)
+    headerCols: false,      // Fix columns number and names (array of column names)
+    maxRows: 999,           // Max number of rows which can be added
+    first_row: true,        // First row should be highlighted?
+    row_template: false,    // An array of column types set in field_templates
+    field_templates: false, // An array of custom field type objects
+
+    // Validate fields
+    validate_field: function (col_id, value, col_type, $element) {
+        return true;
+    }
 });
 </pre>
 	
@@ -153,8 +230,32 @@ mytable.loadJsonData(jsonData); // Fill the table with JSON data
 mytable.getData();              // Get a js array of the table data
 mytable.getJsonData();          // Get JSON from the table data
 mytable.reset();                // Reset the table to the initial set of data
+mytable.isValidated()           // Check if the table pass validation set with validate_field
 </pre>
 	
+	<p>To define a <strong>custom field type</strong> object (<a href="#e4">click here for a full example</a>):</p>
+    <pre>
+[
+    'checkbox' : {
+        
+        html: '&lt;input type="checkbox"/&gt;',     // Input type html
+
+        // How to get the value from the custom input
+        getValue: function (input) {
+            return $(input).is(':checked');
+        },
+
+        // How to set the value of the custom input
+        setValue: function (input, value) {
+            if ( value ){
+                return $(input).attr('checked', true);
+            }
+            return $(input).removeAttr('checked');
+        }
+    }
+]
+</pre>
+
 	<p>That's it, now give a look to the following examples to understand how it works.</p>
 	
 	<hr>
@@ -339,6 +440,98 @@ $("#edittable2").on("focusin", "td:nth-child(1) input, td:nth-child(2) input", f
 });</pre>
     </div>
     
+    <hr>
+
+    <h3 id="e4">Example 4 - Custom field types &amp; validation</h3>
+    <form method="post" action="#output">
+        <textarea id="examplex" style="display: none;" name="myField"></textarea>
+        <a href="#examplexcode" class="showcode button">Show Code</a>
+        <a href="#" id="examplexconsole" class="button">Validate table</a>
+    </form>
+
+    <div id="examplexcode" style="display: none;" class="examplecode">
+
+        <span class="title">script.js</span>
+<pre>
+/**
+ * Example 4 - Custom field types & validation
+ */
+var mynewtable = $('#examplex').editTable({
+    field_templates: {
+        'checkbox' : {
+            html: '&lt;input type="checkbox"/&gt;',
+            getValue: function (input) {
+                return $(input).is(':checked');
+            },
+            setValue: function (input, value) {
+                if ( value ){
+                    return $(input).attr('checked', true);
+                }
+                return $(input).removeAttr('checked');
+            }
+        },
+        'textarea' : {
+            html: '&lt;textarea/&gt;',
+            getValue: function (input) {
+                return $(input).val();
+            },
+            setValue: function (input, value) {
+                return $(input).text(value);
+            }
+        },
+        'select' : {
+            html: '&lt;select&gt;&lt;option value=""&gt;None&lt;/option&gt;&lt;option&gt;All&lt;/option&gt;&lt;/select&gt;',
+            getValue: function (input) {
+                return $(input).val();
+            },
+            setValue: function (input, value) {
+                var select = $(input);
+                select.find('option').filter(function() {
+                    return $(this).val() == value; 
+                }).attr('selected', true);
+                return select;
+            }
+        }
+    },
+    row_template: ['checkbox', 'text', 'text', 'textarea', 'select'],
+    headerCols: ['Yes/No','Date','Value','Description', 'Which?'],
+    first_row: false,
+    data: [
+        [false,"01/30/2013","50,00 €","Lorem ipsum...\n\nDonec in dui nisl. Nam ac libero eget magna iaculis faucibus eu non arcu. Proin sed diam ut nisl scelerisque fermentum."],
+        [true,"02/28/2013","50,00 €",'This is a &lt;textarea&gt;','All']
+    ],
+
+    // Checkbox validation
+    validate_field: function (col_id, value, col_type, $element) {
+        if ( col_type === 'checkbox' ) {
+            $element.parent('td').animate({'background-color':'#fff'});
+            if ( value === false ){
+                $element.parent('td').animate({'background-color':'#DB4A39'});
+                return false;
+            }
+        }
+        return true;
+    },
+    tableClass: 'inputtable custom'
+});
+
+// Trigger event
+$('#examplexconsole').click(function(e) {
+
+    // Get data
+    console.log(mynewtable.getData());
+
+    // Check if data are valid
+    if ( !mynewtable.isValidated() ){
+        alert('Not validated');
+    }
+
+    e.preventDefault();
+});
+</pre>
+
+    </div>
+
     <hr>
     
     <h2>Credits and contacts</h2>

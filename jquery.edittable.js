@@ -7,11 +7,10 @@
 
         // Settings
         var s = $.extend({
-                name: '',
                 data: [['']],
                 jsonData: false,
                 headerCols: false,
-                maxRows: 999
+                maxRows: 999,
             }, options),
             $el = $(this),
             defaultTableContent = '<thead><tr></tr></thead><tbody></tbody>',
@@ -22,7 +21,7 @@
             defaultth = '<th><a class="addcol icon-button" href="#">+</a> <a class="delcol icon-button" href="#">-</a></th>',
             colnumber,
             rownumber,
-            reset;
+            reset,
 
         // Increment for IDs
         i = i + 1;
@@ -80,14 +79,18 @@
                 for (a = 0; a < crow; a += 1) {
                     buildRow(data[a], s.headerCols.length).appendTo($table.find('tbody'));
                 }
+
             } else if ( data[0] ) {
+
                 // Variable columns
                 for (a = 0; a < data[0].length; a += 1) {
                     $table.find('thead tr').append(defaultth);
                 }
+
                 for (a = 0; a < crow; a += 1) {
                     buildRow(data[a]).appendTo($table.find('tbody'));
                 }
+
             }
 
             // Append missing th
@@ -104,6 +107,7 @@
         function exportData() {
             var row = 0, data = [];
 
+
             $table.find('tbody tr').each(function () {
 
                 row += 1;
@@ -111,8 +115,10 @@
 
                 $(this).find('input').each(function () {
                     data[row].push($(this).val());
+                        
                 });
 
+                
             });
 
             // Remove undefined

@@ -8,6 +8,7 @@
         // Settings
         var s = $.extend({
                 data: [['']],
+                tableClass: 'inputtable',
                 jsonData: false,
                 headerCols: false,
                 maxRows: 999,

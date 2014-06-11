@@ -13,6 +13,8 @@
                 headerCols: false,
                 maxRows: 999,
                 first_row: true,
+                row_template: false,
+                field_templates: false,
             }, options),
             $el = $(this),
             defaultTableContent = '<thead><tr></tr></thead><tbody></tbody>',
@@ -29,9 +31,15 @@
         i = i + 1;
 
         // Build cell
-        function buildCell(content) {
-            content = (content === 0) ? "0" : (content || '').toString();
-            return '<td><input type="text" name="" value="' + content.replace(/"/g, "&quot;") + '" /></td>';
+        function buildCell(content, type) {
+            content = (content === 0) ? "0" : (content || '');
+            // Custom type
+            if (type && 'text' !== type){
+                var field = s.field_templates[type];
+                return '<td>' + field.setValue(field.html, content)[0].outerHTML + '</td>';
+            }
+            // Default
+            return '<td><input type="text" value="' + content.toString().replace(/"/g, "&quot;") + '" /></td>';
         }
 
         // Build row
@@ -41,8 +49,17 @@
 
             data = data || '';
 
-            for (b = 0; b < (len || data.length); b += 1) {
-                rowcontent += buildCell(data[b]);
+            if (!s.row_template) {
+                // Without row template
+                for (b = 0; b < (len || data.length); b += 1) {
+                    rowcontent += buildCell(data[b]);
+                }
+            } else {
+                // With row template
+                for (b = 0; b < s.row_template.length; b += 1) {
+                    // For each field in the row
+                    rowcontent += buildCell(data[b], s.row_template[b]);
+                }
             }
 
             return $('<tr/>', {
@@ -72,14 +89,22 @@
             // Clear table
             $table.html(defaultTableContent);
 
-            // Populate table headers
-            if (s.headerCols) {
+            // If headers or row_template are set
+            if (s.headerCols || s.row_template) {
+
                 // Fixed columns
-                for (a = 0; a < s.headerCols.length; a += 1) {
-                    $table.find('thead tr').append('<th>' + s.headerCols[a] + '</th>');
+                var col = s.headerCols || s.row_template;
+
+                // Table headers
+                for (a = 0; a < col.length; a += 1) {
+                    var col_title = s.headerCols[a] || '';
+                    $table.find('thead tr').append('<th>' + col_title + '</th>');
                 }
+
+                // Table content
                 for (a = 0; a < crow; a += 1) {
-                    buildRow(data[a], s.headerCols.length).appendTo($table.find('tbody'));
+                    // For each row in data
+                    buildRow(data[a], col.length).appendTo($table.find('tbody'));
                 }
 
             } else if ( data[0] ) {
@@ -107,17 +132,26 @@
 
         // Export data
         function exportData() {
-            var row = 0, data = [];
+            var row = 0, data = [], value;
 
+            is_validated = true;
 
             $table.find('tbody tr').each(function () {
 
                 row += 1;
                 data[row] = [];
 
-                $(this).find('input').each(function () {
-                    data[row].push($(this).val());
+                $(this).find('td:not(:last-child)').each(function (i, v) {
+                    if ( s.row_template && 'text' !== s.row_template[i] ){
+                        var field = s.field_templates[s.row_template[i]],
+                            el = $(this).find($(field.html).prop('tagName'));
                         
+                        value = field.getValue(el);
+                        data[row].push(value);
+                    } else {
+                        value = $(this).find('input[type="text"]').val();
+                        data[row].push(value);
+                    }
                 });
 
                 

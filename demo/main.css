@@ -40,3 +40,12 @@ hr {
 	border: 0;margin-top: 20px;
 	color: #eee;background-color: #eee;height: 3px;
 }
+.inputtable.custom textarea {
+	width: 96%;margin:0;padding:5px 2%;border: 0;resize: none;height: 100px;
+}
+.inputtable.custom textarea:focus {
+	background-color: #fafafa;
+}
+.inputtable.custom input[type=text]{
+	height: 110px;
+}

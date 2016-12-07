@@ -1,6 +1,5 @@
 {
   "name": "jquery-edittable",
-  "private": true,
   "version": "0.2.1",
   "description": "jQuery custom input field for data tables",
   "repository": "https://github.com/micc83/editTable",

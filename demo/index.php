@@ -104,7 +104,9 @@ if (isset($_REQUEST['ajax']) ){
         	    $(this).datepicker();
         	});
 
-        	// Example 4
+        	// Example 4 EDITED by shadow7853        
+            // shadow7853: I've modified the code to enable headerCols, row_templates to be also partials (define templates for first cells, others will be 'text') and to not disable column adding.
+            // shadow7853: Also data rows could be partials, not all with the same length.
         	// Custom fields & validation
             var mynewtable = $('#examplex').editTable({
                 field_templates: {
@@ -148,7 +150,69 @@ if (isset($_REQUEST['ajax']) ){
                 first_row: false,
                 data: [
                     [false,"01/30/2013","50,00 €","Lorem ipsum...\n\nDonec in dui nisl. Nam ac libero eget magna iaculis faucibus eu non arcu. Proin sed diam ut nisl scelerisque fermentum."],
-                    [true,"02/28/2013","50,00 €",'This is a <textarea>','All']
+                    [true,"02/28/2013","50,00 €",'This is a <textarea>','All', 'extra-dynamic-cell'],
+                    [true,"partial row"]
+                ],
+                validate_field: function (col_id, value, col_type, $element) {
+                    if ( col_type === 'checkbox' ) {
+                        $element.parent('td').animate({'background-color':'#fff'});
+                        if ( value === false ){
+                            $element.parent('td').animate({'background-color':'#DB4A39'});
+                            return false;
+                        }
+                    }
+                    return true;
+                },
+                tableClass: 'inputtable custom'
+            });
+
+
+        	// Example 4 
+        	// Custom fields & validation
+            var mynewtable = $('#examplex-PARTIAL').editTable({
+                field_templates: {
+                    'checkbox' : {
+                        html: '<input type="checkbox"/>',
+                        getValue: function (input) {
+                            return $(input).is(':checked');
+                        },
+                        setValue: function (input, value) {
+                            if ( value ){
+                                return $(input).attr('checked', true);
+                            }
+                            return $(input).removeAttr('checked');
+                        }
+                    },
+                    'textarea' : {
+                        html: '<textarea/>',
+                        getValue: function (input) {
+                            return $(input).val();
+                        },
+                        setValue: function (input, value) {
+                            return $(input).text(value);
+                        }
+                    },
+                    'select' : {
+                        html: '<select><option value="">None</option><option>All</option></select>',
+                        getValue: function (input) {
+                            return $(input).val();
+                        },
+                        setValue: function (input, value) {
+                            var select = $(input);
+                            select.find('option').filter(function() {
+                                return $(this).val() == value; 
+                            }).attr('selected', true);
+                            return select;
+                        }
+                    }
+                },
+                row_template: ['checkbox', 'text', 'text', 'textarea', 'select'],
+                headerCols: ['Yes/No','Date','Value','Description', 'Which?'],
+                first_row: false,
+                data: [
+                    [false,"01/30/2013","50,00 €","Lorem ipsum...\n\nDonec in dui nisl. Nam ac libero eget magna iaculis faucibus eu non arcu. Proin sed diam ut nisl scelerisque fermentum."],
+                    [true,"02/28/2013","50,00 €",'This is a <textarea>','All'],
+                    [true,"partial row"]
                 ],
                 validate_field: function (col_id, value, col_type, $element) {
                     if ( col_type === 'checkbox' ) {

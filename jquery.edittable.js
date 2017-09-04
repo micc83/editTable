@@ -15,6 +15,8 @@
             first_row: true,
             row_template: false,
             field_templates: false,
+            fixed_cols: false,
+            
             validate_field: function (col_id, value, col_type, $element) {
                 return true;
             }
@@ -22,7 +24,7 @@
             $el = $(this),
             defaultTableContent = '<thead><tr></tr></thead><tbody></tbody>',
             $table = $('<table/>', {
-                class: s.tableClass + ((s.first_row) ? ' wh' : ''),
+                class: s.tableClass + ((s.first_row) ? ' wh' : '') + ((s.fixed_rows) ? ' fr' : ''),
                 html: defaultTableContent
             }),
             defaultthbuttons = '<a class="addcol icon-button" href="#">+</a> <a class="delcol icon-button" href="#">-</a>',
@@ -71,8 +73,12 @@
                 }
             }
 
+            if (!s.fixed_rows) {
+                rowcontent = rowcontent + '<td><a class="addrow icon-button" href="#">+</a> <a class="delrow icon-button" href="#">-</a></td>';
+            }
+
             return $('<tr/>', {
-                html: rowcontent + '<td><a class="addrow icon-button" href="#">+</a> <a class="delrow icon-button" href="#">-</a></td>'
+                html: rowcontent
             });
 
         }
@@ -119,7 +125,11 @@
                 // Table headers
                 for (a = 0; a < colnumber; a += 1) {
                     var col_title = s.headerCols[a] || '';
-                    $table.find('thead tr').append('<th>' + '<span style="display: block; margin-bottom: 3px">' + col_title + '</span>' + defaultthbuttons + '</th>');
+                    if (s.fixed_cols) {
+                        $table.find('thead tr').append('<th>' + col_title + '</th>');
+                    } else {
+                        $table.find('thead tr').append('<th>' + '<span style="display: block; margin-bottom: 3px">' + col_title + '</span>' + defaultthbuttons + '</th>');
+                    }
                 }
 
                 // Table content
@@ -130,9 +140,11 @@
 
             } else {
 
-                // Variable columns
-                for (a = 0; a < colnumber; a += 1) {
-                    $table.find('thead tr').append(defaultth);
+                // Variable columns   
+                if (!s.fixed_cols) {
+                    for (a = 0; a < colnumber; a += 1) {
+                        $table.find('thead tr').append(defaultth);
+                    }
                 }
 
                 for (a = 0; a < crow; a += 1) {
@@ -142,7 +154,9 @@
             }
 
             // Append missing th
-            $table.find('thead tr').append('<th></th>');
+            if (!s.fixed_rows) {
+                $table.find('thead tr').append('<th></th>');
+            }
 
             // Count rows and columns
             //colnumber = $table.find('thead th').length - 1;

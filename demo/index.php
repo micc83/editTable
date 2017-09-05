@@ -162,6 +162,9 @@ if (isset($_REQUEST['ajax']) ){
                         }
                     }
                     return true;
+				},
+                data_changed: function (col_id, action, value, $element) {
+                    $('#examplexlog').append('<div>col_id: ' + col_id + ', action: ' + action + ', value: ' + $('<div/>').text(value).html() + ', $element: ' + $element + '</div>');
                 },
                 tableClass: 'inputtable custom'
             });
@@ -223,6 +226,13 @@ var mytable = $('#edittable').editTable({
     // Validate fields
     validate_field: function (col_id, value, col_type, $element) {
         return true;
+	},
+	
+    // Data changed event (triggered on input, select, textarea change event and on enter keydown)
+    // action: data: col_id, value, $element
+    //         addcol: col_id
+    //         delcol: col_id
+    data_changed: function (col_id, action, value, $element) {
     }
 });
 </pre>
@@ -449,7 +459,8 @@ $("#edittable2").on("focusin", "td:nth-child(1) input, td:nth-child(2) input", f
 
     <h3 id="e4">Example 4 - Custom field types &amp; validation</h3>
     <form method="post" action="#output">
-        <textarea id="examplex" style="display: none;" name="myField"></textarea>
+		<textarea id="examplex" style="display: none;" name="myField"></textarea>
+		<div id="examplexlog"></div>
         <a href="#examplexcode" class="showcode button">Show Code</a>
         <a href="#" id="examplexconsole" class="button">Validate table</a>
     </form>
@@ -516,7 +527,12 @@ var mynewtable = $('#examplex').editTable({
             }
         }
         return true;
+	},
+	
+    data_changed: function (col_id, action, value, $element) {
+        $('#examplexlog').append('&lt;div&gt;col_id: ' + col_id + ', action: ' + action + ', value: ' + $('&lt;div/&gt;').text(value).html() + ', $element: ' + $element + '&lt;/div&gt;');
     },
+	
     tableClass: 'inputtable custom'
 });
 

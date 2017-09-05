@@ -259,6 +259,11 @@ var mynewtable = $('#examplex').editTable({
         }
         return true;
     },
+	
+    data_changed: function (col_id, action, value, $element) {
+        $('#examplexlog').append('&lt;div&gt;col_id: ' + col_id + ', action: ' + action + ', value: ' + $('&lt;div/&gt;').text(value).html() + ', $element: ' + $element + '&lt;/div&gt;');
+    },
+	
     tableClass: 'inputtable custom'
 });
 

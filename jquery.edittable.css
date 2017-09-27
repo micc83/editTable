@@ -28,7 +28,7 @@ table.inputtable a.icon-button.disabled {
 	background-color: #eee;
 }
 /* Row last cel */
-table.inputtable td:last-child, table.inputtable th:last-child{
+table.inputtable:not(.fr) td:last-child, table.inputtable:not(.fr) th:last-child{
 	background-color: #f8f8f8;width: 54px;border: none;
 }
 /* Table single cells */

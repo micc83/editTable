@@ -1,4 +1,6 @@
 /*! editTable v0.2.0 by Alessandro Benoit */
+/*! https://codeb.it/edittable/  -  https://github.com/micc83/editTable */
+/*! VERSIONE MODIFICATA da shaodw7853: https://github.com/shadow7853/editTable */
 (function ($, window, i) {
     
         'use strict';
@@ -318,6 +320,10 @@
     
                 checkButtons();
     
+                if (s.data_changed) {
+                    s.data_changed(rownumber, 'addrow');
+                }
+    
                 return false;
             });
     
@@ -335,6 +341,10 @@
                 $(this).closest('tr').remove();
     
                 $table.find('.addrow').removeClass('disabled');
+    
+                if (s.data_changed) {
+                    s.data_changed(rownumber, 'delrow');
+                }
     
                 return false;
             });

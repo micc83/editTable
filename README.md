@@ -65,6 +65,37 @@ To define a <strong>custom field type</strong> object:
     }
 ]
 ```
+To define a <strong>custom field type</strong> object,
+and to set different properties for input elements depending on the row in which the input is located:
+
+```js
+var selectOptions = [];
+selectOptions[1] = "<option value='val-1-1'>val-1-1</option><option value='val-1-2'>val-1-2</option>";
+selectOptions[2] = "<option value='val-2-1'>val-2-1</option><option value='val-2-2'>val-2-2</option>";
+
+var mytable = $('#edittable')..editTable({
+    field_templates: {
+        'select': {
+            html: '<select></select>',  // Input type html
+            getValue: function getValue(input) {
+                return $(input).val();
+            },
+            setValue: function setValue(input, value, row) {
+                var select = $(input);
+                //Add options depending on the row number
+                if (row !== undefined && selectOptions[row] !== undefined) {
+                    select.html(selectOptions[row]);
+                } 
+
+                select.find('option').filter(function () {
+                    return $(this).val() == value;
+                }).attr('selected', true);
+                return select;
+            }
+        }
+    }
+});
+```
 
 That's it, now give a look to [the examples](http://codeb.it/edittable/) to understand how it works.
 

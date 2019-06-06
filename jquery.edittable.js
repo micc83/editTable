@@ -35,12 +35,12 @@
         i = i + 1;
 
         // Build cell
-        function buildCell(content, type, row) {
+        function buildCell(content, type, col) {
             content = (content === 0) ? "0" : (content || '');
             // Custom type
             if (type && 'text' !== type){
                 var field = s.field_templates[type];
-                return '<td>' + field.setValue(field.html, content, row)[0].outerHTML + '</td>';
+                return '<td>' + field.setValue(field.html, content, col)[0].outerHTML + '</td>';
             }
             // Default
             return '<td><input type="text" value="' + content.toString().replace(/"/g, "&quot;") + '" /></td>';

@@ -66,7 +66,7 @@ To define a <strong>custom field type</strong> object:
 ]
 ```
 To define a <strong>custom field type</strong> object,
-and to set different properties for input elements depending on the row in which the input is located:
+and to set different properties for input elements depending on the column index in which the input is located:
 
 ```js
 var selectOptions = [];
@@ -80,11 +80,11 @@ var mytable = $('#edittable')..editTable({
             getValue: function getValue(input) {
                 return $(input).val();
             },
-            setValue: function setValue(input, value, row) {
+            setValue: function setValue(input, value, col) {
                 var select = $(input);
                 //Add options depending on the row number
-                if (row !== undefined && selectOptions[row] !== undefined) {
-                    select.html(selectOptions[row]);
+                if (col !== undefined && selectOptions[col] !== undefined) {
+                    select.html(selectOptions[col]);
                 } 
 
                 select.find('option').filter(function () {

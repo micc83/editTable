@@ -1,22 +1,4 @@
-<?php 
-if (isset($_REQUEST['ajax']) ){
-	header('Content-Type: application/json');
-	if ( isset( $_REQUEST['data'] ) ){
-		$data = json_decode( stripslashes( $_REQUEST['data'] ) );
-	} else {
-		$data = array(
-			array('Carbon','Hydrogen','Nitrogen','Oxygen'),
-			array(10,15,1,0),
-			array(8,11,1,2),
-			array(10,15,1,1),
-			array(12,17,1,1),
-			array(14,19,1,2)
-		);
-	}
-	echo json_encode( $data );
-	die();
-}
-?><!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
     <head>
@@ -26,11 +8,11 @@ if (isset($_REQUEST['ajax']) ){
         <title>jQuery editTable</title>
         <meta name="description" content="jQuery editTable is a very small jQuery Plugin (~1Kb gzipped) that fill the gap left by the missing of a default input field for data tables.">
         <link rel="stylesheet" href="main.css?v=0.2.0">
-        <script src="//code.jquery.com/jquery-latest.js"></script>
+        <script src="https://code.jquery.com/jquery-latest.js"></script>
         <script type="text/javascript" src="../jquery.edittable.js?v=0.2.0"></script>
-        <script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
         <link rel="stylesheet" href="../jquery.edittable.css?v=0.2.0">
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
         <script>
         $(window).ready(function () {
         	
@@ -49,30 +31,14 @@ if (isset($_REQUEST['ajax']) ){
 	        	var _this = $(this),text = $(this).text();
 	        	$(this).text('Loading...');
 	        	$.ajax({
-	        		url: 	'index.php',
-	        		type: 	'POST',
+	        		url: 	'data.json',
+	        		type: 	'GET',
 	        		data: 	{
 	        			ajax: true
 	        		},
 	        		complete: function (result) {
 	        			_this.text(text);
 	        			eTable.loadJsonData(result.responseText);
-	        		}
-	        	});
-	        	return false;
-	        });
-	        
-	        // Send JSON data trough an ajax call
-	        $('.sendjson').click(function () {
-	        	$.ajax({
-	        		url: 	'index.php',
-	        		type: 	'POST',
-	        		data: 	{
-	        			ajax: true,
-	        			data: eTable.getJsonData()
-	        		},
-	        		complete: function (result) {
-	        			console.log('Server response', JSON.parse(result.responseText));
 	        		}
 	        	});
 	        	return false;
@@ -265,17 +231,15 @@ mytable.isValidated()           // Check if the table pass validation set with v
 	<p>In the first example we'll implement the simplest HTML POST use of editTable. If you are looking to use editTable on ajax contest instead just give a look to the next example.</p>
 	
 	<form method="post" action="#output">
-		<textarea id="source" style="display: none;" name="myField"><?php 
-		echo json_encode(array(
-			array('Period','Full Board', 'Half Board', 'Bed & Breakfast'),
-			array('01/01 - 31/01','50.00 €', '40.00 €', '30.00 €'),
-			array('01/02 - 28/02','55.00 €', '45.00 €', '35.00 €'),
-			array('01/03 - 31/03','60.00 €', '50.00 €', '40.00 €'),
-			array('01/04 - 30/04','55.00 €', '45.00 €', '35.00 €'),
-			array('01/05 - 31/05','50.00 €', '40.00 €', '30.00 €')
-		)); 
-		?></textarea>
-		<button type="submit">Post data (will reload the page)</button> 
+		<textarea id="source" style="display: none;" name="myField">[
+			["Carbon","Hydrogen","Nitrogen","Oxygen"],
+			[10,15,1,0],
+			[8,11,1,2],
+			[10,15,1,1],
+			[12,17,1,1],
+			[14,19,1,2]
+		]</textarea>
+		<button type="submit">Post data (and check your network tab)</button> 
 		<a href="#example0code" class="showcode button">Show Code</a>
 	</form>
 	
@@ -311,16 +275,11 @@ $(window).ready(function () {
 	
 	</div>
 	
-	<!-- Example output -->
-	<span class="title" id="output">Post Output</span>
-	<pre><?php var_dump( json_decode( stripslashes( $_POST['myField'] ) ) ); ?></pre>
-	
 	<hr>
 	
 	<h3>Example 2 - AJAX with editable columns:</h3>
 	
 	<div id="edittable"></div>
-	<a href="#" class="sendjson button">Ajax send JSON (check your console)</a> 
 	<a href="#" class="loadjson button">Ajax load JSON</a> 
 	<a href="#" class="reset button">Reset Table</a>
 	<a href="#example1code" class="showcode button">Show Code</a>
@@ -536,7 +495,7 @@ $('#examplexconsole').click(function(e) {
     
     <h2>Credits and contacts</h2>
                             
-	<p><strong>editTable</strong> has been made by <a href="http://codeb.it" target="_blank">me</a>. You can contact me at <a href="mailto:micc83@gmail.com">micc83@gmail.com</a> or <a href="https://twitter.com/Micc1983" target="_blank">twitter</a> for any issue or feauture request.</p>
+	<p><strong>editTable</strong> has been made by <a href="https://github.com/micc83" target="_blank">me</a>. You can contact me at <a href="mailto:micc83@gmail.com">micc83@gmail.com</a> or <a href="https://twitter.com/Micc1983" target="_blank">twitter</a> for any issue or feauture request.</p>
     
   </div> 
   

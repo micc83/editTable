@@ -66,8 +66,8 @@ To define a <strong>custom field type</strong> object:
 ]
 ```
 
-That's it, now give a look to [the examples](http://codeb.it/edittable/) to understand how it works.
+That's it, now give a look to [the examples](https://micc83.github.io/editTable/demo/) to understand how it works.
 
 ## Credits and contacts
 
-ReStable has been made by [me](http://codeb.it). You can contact me at micc83@gmail.com or [twitter](https://twitter.com/Micc1983) for any issue or feauture request.
+ReStable has been made by [me](https://github.com/micc83). You can contact me at micc83@gmail.com or [twitter](https://twitter.com/Micc1983) for any issue or feauture request.

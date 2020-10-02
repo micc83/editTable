@@ -133,7 +133,13 @@
 
             checkButtons();
         }
-
+        
+        // Update settings - header , template
+        function updateSettings(header = null, template = null) {
+          if (template != null) s.row_template = template;
+          if (header != null) s.headerCols = header;
+        }
+        
         // Export data
         function exportData() {
             var row = 0, data = [], value;
@@ -302,7 +308,12 @@
             },
             isValidated: function () {
                 return is_validated;
-            }
+            },
+            //update header and template 
+            update: function (header, template) {
+            updateSettings(header, template);
+            },
+
         };
     };
 

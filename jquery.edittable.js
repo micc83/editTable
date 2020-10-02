@@ -7,18 +7,18 @@
 
         // Settings
         var s = $.extend({
-                data: [['']],
-                tableClass: 'inputtable',
-                jsonData: false,
-                headerCols: false,
-                maxRows: 999,
-                first_row: true,
-                row_template: false,
-                field_templates: false,
-                validate_field: function (col_id, value, col_type, $element) {
-                    return true;
-                }
-            }, options),
+            data: [['']],
+            tableClass: 'inputtable',
+            jsonData: false,
+            headerCols: false,
+            maxRows: 999,
+            first_row: true,
+            row_template: false,
+            field_templates: false,
+            validate_field: function (col_id, value, col_type, $element) {
+                return true;
+            }
+        }, options),
             $el = $(this),
             defaultTableContent = '<thead><tr></tr></thead><tbody></tbody>',
             $table = $('<table/>', {
@@ -38,7 +38,7 @@
         function buildCell(content, type) {
             content = (content === 0) ? "0" : (content || '');
             // Custom type
-            if (type && 'text' !== type){
+            if (type && 'text' !== type) {
                 var field = s.field_templates[type];
                 return '<td>' + field.setValue(field.html, content)[0].outerHTML + '</td>';
             }
@@ -111,7 +111,7 @@
                     buildRow(data[a], col.length).appendTo($table.find('tbody'));
                 }
 
-            } else if ( data[0] ) {
+            } else if (data[0]) {
 
                 // Variable columns
                 for (a = 0; a < data[0].length; a += 1) {
@@ -133,13 +133,13 @@
 
             checkButtons();
         }
-        
-        // Update settings - header , template
-        function updateSettings(header = null, template = null) {
-          if (template != null) s.row_template = template;
-          if (header != null) s.headerCols = header;
+
+        // Update settings - headerCols and rowTemplate 
+        function updateSettings(headerCols = null, rowTemplate = null) {
+            if (rowTemplate != null) s.row_template = rowTemplate;
+            if (headerCols != null) s.headerCols = headerCols;
         }
-        
+
         // Export data
         function exportData() {
             var row = 0, data = [], value;
@@ -152,24 +152,24 @@
                 data[row] = [];
 
                 $(this).find('td:not(:last-child)').each(function (i, v) {
-                    if ( s.row_template && 'text' !== s.row_template[i] ){
+                    if (s.row_template && 'text' !== s.row_template[i]) {
                         var field = s.field_templates[s.row_template[i]],
                             el = $(this).find($(field.html).prop('tagName'));
-                        
+
                         value = field.getValue(el);
-                        if ( !s.validate_field(i, value, s.row_template[i], el) ){
+                        if (!s.validate_field(i, value, s.row_template[i], el)) {
                             is_validated = false;
                         }
                         data[row].push(value);
                     } else {
                         value = $(this).find('input[type="text"]').val();
-                        if ( !s.validate_field(i, value, 'text', v) ){
+                        if (!s.validate_field(i, value, 'text', v)) {
                             is_validated = false;
                         }
                         data[row].push(value);
                     }
                 });
-                
+
             });
 
             // Remove undefined
@@ -309,9 +309,9 @@
             isValidated: function () {
                 return is_validated;
             },
-            //update header and template 
-            update: function (header, template) {
-            updateSettings(header, template);
+            //update headerCols and rowTemplate 
+            update: function (headerCols, rowTemplate) {
+                updateSettings(headerCols, rowTemplate);
             },
 
         };

@@ -140,6 +140,7 @@
             if (headerCols != null) s.headerCols = headerCols;
         }
 
+
         // Export data
         function exportData() {
             var row = 0, data = [], value;
@@ -313,7 +314,6 @@
             update: function (headerCols, rowTemplate) {
                 updateSettings(headerCols, rowTemplate);
             },
-
         };
     };
 

@@ -40,7 +40,8 @@ mytable.getData();               // Get a js array of the table data
 mytable.getJsonData();           // Get JSON from the table data
 mytable.reset();                 // Reset the table to the initial set of data
 mytable.isValidated();           // Check if the table pass validation set with validate_field
-mytable.update(header,template); // Update header:[<string>] and template: [<string>] , Do mytable.reset(); after update.
+mytable.update(header,template); // Update header:[<string>] and template: [<string>] , 
+                                 // Do mytable.reset(); after update.
 
 To define a <strong>custom field type</strong> object:
 

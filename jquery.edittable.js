@@ -134,7 +134,7 @@
             checkButtons();
         }
 
-        //Update settings - headerCols and rowTemplate 
+        // Update settings - headerCols and rowTemplate 
         function updateSettings(headerCols = null, rowTemplate = null) {
             if (rowTemplate != null) s.row_template = rowTemplate;
             if (headerCols != null) s.headerCols = headerCols;
@@ -313,6 +313,7 @@
             update: function (headerCols, rowTemplate) {
                 updateSettings(headerCols, rowTemplate);
             },
+
         };
     };
 

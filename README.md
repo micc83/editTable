@@ -34,12 +34,14 @@ var mytable = $('#edittable').editTable({
 There are of course many methods which can be used on the created table. Let's see...
 
 ```js
-mytable.loadData(dataArray);    // Fill the table with js data
-mytable.loadJsonData(jsonData); // Fill the table with JSON data
-mytable.getData();              // Get a js array of the table data
-mytable.getJsonData();          // Get JSON from the table data
-mytable.reset();                // Reset the table to the initial set of data
-mytable.isValidated()           // Check if the table pass validation set with validate_field
+mytable.loadData(dataArray);              // Fill the table with js data
+mytable.loadJsonData(jsonData);           // Fill the table with JSON data
+mytable.getData();                        // Get a js array of the table data
+mytable.getJsonData();                    // Get JSON from the table data
+mytable.reset();                          // Reset the table to the initial set of data
+mytable.isValidated()                     // Check if the table pass validation set with validate_field
+mytable.update(headerCols , rowTemplate); // Update headerCols:[<string>] and rowTemplate: [<string>] ,
+                                          // Do mytable.reset(); after update.
 ```
 
 To define a <strong>custom field type</strong> object:
